@@ -21,6 +21,12 @@ export default function Login(){
   }
   console.log(formData)
 
+  function handleSubmit(event){
+    event.preventDefault()
+    
+
+  }
+
   return(
     <div>
       <form>
@@ -47,7 +53,6 @@ export default function Login(){
         <button 
           name="submit"
           id="submit"
-          onClick={handleChange}
         >submit</button>
       </form>
     </div>

@@ -17,6 +17,6 @@ const IdentitySchema = mongoose.Schema(
     }
 )
 
-const Identity = mongoose.model("Identity",IdentitySchema);
+const Identitymodel = mongoose.model("Identity",IdentitySchema);
 
-module.exports = Identity;
+module.exports = Identitymodel;

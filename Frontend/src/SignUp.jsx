@@ -32,12 +32,15 @@ export default function SignUp(){
   
 
   function handleSubmit(event){
-    event.preventDefault
-    axios.post("https://localhost:3001/signup",{
+    event.preventDefault()
+    axios.post("http://localhost:3001/signup",{
       name : formData.name,
       email: formData.email,
       password: formData.password
     })
+    .then(result=>{console.log(result)
+      navigate("/Home")})
+    .catch(error=>console.log(error))
   }
 
   return(
@@ -74,7 +77,8 @@ export default function SignUp(){
         <button 
           name="submit"
           id="submit"
-          onClick={goHome}
+          type="submit"
+         
         >submit</button>
        
       </form>
