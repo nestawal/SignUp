@@ -27,9 +27,10 @@ export default function SignUp(){
         [event.target.name] : event.target.value
       }
     })
-
+    
   }
-  
+  console.log(formData)
+
 
   function handleSubmit(event){
     event.preventDefault()
@@ -39,7 +40,8 @@ export default function SignUp(){
       password: formData.password
     })
     .then(result=>{console.log(result)
-      navigate("/Home")})
+      navigate("/Home",{state: {formData}})
+    })
     .catch(error=>console.log(error))
   }
 

@@ -5,11 +5,11 @@ const cors = require("cors");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin :'http://localhost:5173'}));
 const Identitymodel = require('./identity.model.js');
 const Database = require('./database.js');
 
-app.post("https://localhost:3001/signup",(req,res)=>{
+app.post("/signup",(req,res)=>{
     Identitymodel.create(req.body)
     .then(Identity => res.json(Identity))
     .catch(err => res.json(err))
