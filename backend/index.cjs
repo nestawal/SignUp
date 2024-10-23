@@ -15,6 +15,22 @@ app.post("/signup",(req,res)=>{
     .catch(err => res.json(err))
 });
 
+app.post("/login",(req,res)=>{
+    const{email,password}= req.body
+    Identitymodel.findOne({email: email})
+    .then(person=>{
+       if(user){
+        if(person.password === password){
+            res.json("found")
+        }else{
+            res.json("wrong password")
+        }
+       }else{
+        res.json("nowhere to be found")
+       }
+    })
+});
+
 
 mongoose.connect(Database)
     .then(()=>{
