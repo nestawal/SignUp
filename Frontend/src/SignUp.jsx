@@ -1,90 +1,100 @@
-import React,{useState} from "react"
-import { Navigate,Link,useNavigate} from 'react-router-dom';
+import {React,useState} from "react";
+import { Navigate,useNavigate } from 'react-router-dom';
 import axios from "axios"
 
 
-export default function SignUp(){
-  const navigate= useNavigate()
-  const [formData,setFormData] = useState(
-    {name:"",
-      email:"",
-      password:""
+export  default function Signup(){
+
+  const navigate = useNavigate()
+ 
+const [formData,setFormData] = useState({
+  name:"",
+  email:"",
+  password:""
+})
+
+function handleChange(e){
+  setFormData(prev=>{
+    return{
+      ...prev,
+      [e.target.name] : e.target.value 
     }
-  )
+  })
+}
+console.log(formData)
 
-  function goHome(){
-    navigate("/Home")
-  }
+function handleSubmit(e){
+  e.preventDefault()
+  axios.post("http://localhost:3001/signup",{
+    name : formData.name,
+    email: formData.email,
+    password: formData.password
+  })
+  .then(result=>{console.log(result)
+    navigate("/",{state: {formData}})
+  })
+  .catch(error=>console.log(error))
 
-  function goLogin(){
-    return(<Navigate to="/Login"/>)
-  }
-
-  function handleChange(event){
-    setFormData(prevFormData => {
-      return{
-        ...prevFormData,
-        [event.target.name] : event.target.value
-      }
-    })
-    
-  }
-  console.log(formData)
+}
 
 
-  function handleSubmit(event){
-    event.preventDefault()
-    axios.post("http://localhost:3001/signup",{
-      name : formData.name,
-      email: formData.email,
-      password: formData.password
-    })
-    .then(result=>{console.log(result)
-      navigate("/Home",{state: {formData}})
-    })
-    .catch(error=>console.log(error))
-  }
 
-  return(
+function goLogin(){
+  navigate("/login")
+}
+
+
+ return(
     <div>
-      <form onSubmit={handleSubmit}>
-        <h1>Check In</h1>
-        <label>Email</label><br/>
-        <input 
-          id="email"
-          placeholder="Email" 
-          type="text"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-        /><br/>
-        <label>name</label><br/>
-        <input 
-          id="name" 
-          placeholder="Name" 
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-        /><br/>
-        <label>password</label><br/>
-        <input 
-          id="password" 
-          placeholder="password" 
-          type="text"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        /><br/>
-        <button 
-          name="submit"
-          id="submit"
-          type="submit"
-         
-        >submit</button>
-       
-      </form>
-      <Link to="/Login">if already signed in</Link>
+            
+            <div className="container">
+            <div className="form" onSubmit={handleSubmit}>
+                <h1 id="title">Sign Up</h1>
+                <form>
+                <div className="input-group">
+                    <div className="input-field" id="nameField">
+                    <i className="fa-solid fa-envelope"></i>
+                    <input
+                    onChange={handleChange} 
+                    type="text" 
+                    placeholder="name" 
+                    name="name"
+                    value={formData.name}
+                    />
+                    </div>
+                    <div className="input-field">  
+                    <i className="fa-solid fa-envelope"></i>
+                    <input 
+                    onChange={handleChange} 
+                    type="text" 
+                    placeholder="email"
+                    value={formData.email}
+                    name="email" 
+                    />
+                    </div>
+                    <div className="input-field">  
+                    <i className="fa-solid fa-envelope"></i>
+                    <input 
+                    onChange={handleChange} 
+                    name = "password"
+                    type="password" 
+                    value={formData.password}
+                    placeholder="password"
+                     />              
+                    </div>
+                    <p>Lost password<a href="#">Click Here!</a></p>
+                </div>
+                <div className="btn-field">
+                    <button type="submit" id="signupBtn" onClick={handleSubmit}>Sign Up</button>
+                    <button type="button" id="signinBtn" onClick={goLogin}  >Sign in</button>
+                    
+                </div>
+                </form>
+            </div>
+            
+            </div>
+            
+
     </div>
-  )
+ )
 }
